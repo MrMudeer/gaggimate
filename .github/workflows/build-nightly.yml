@@ -44,8 +44,11 @@ jobs:
           mkdir -p upload/display
           mkdir -p upload/headless
           mkdir -p upload/controller
-          git tag -d nightly
-          git tag -d db
+          # A fork created with "master only" has no tags: take the v* release tags from upstream
+          # (same commits) so git describe and the firmware version string still work.
+          git fetch --no-tags https://github.com/jniebuhr/gaggimate.git '+refs/tags/v*:refs/tags/v*'
+          git tag -d nightly || true
+          git tag -d db || true
           git describe --tags --dirty --match "v*" > out/version.txt
       - name: Build Web
         run: ./scripts/build_webui.sh
