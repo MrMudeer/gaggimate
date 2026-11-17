@@ -469,6 +469,13 @@ void GaggiMateController::sendTankLevel() {
 void GaggiMateController::registerBoardConfig(ControllerConfig config) { configs.push_back(config); }
 
 void GaggiMateController::detectBoard() {
+#ifdef GM_FORCE_PRO_LEGO
+    // This fork's controller is a Lego build without the GPIO40/GPIO11 board-ID divider,
+    // so skip the ADC detection and always use the Lego pin map.
+    _config = GM_PRO_LEGO;
+    ESP_LOGI(LOG_TAG, "Board detection skipped (GM_FORCE_PRO_LEGO). Using Board: %s", _config.name.c_str());
+    return;
+#endif
     constexpr int MAX_DETECT_RETRIES = 3;
     pinMode(DETECT_EN_PIN, OUTPUT);
     pinMode(DETECT_VALUE_PIN, INPUT_PULLDOWN);

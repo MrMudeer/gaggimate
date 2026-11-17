@@ -33,7 +33,7 @@ concurrency:
 env:
   UPSTREAM_REPO: https://github.com/jniebuhr/gaggimate.git
   # Guards against a conflict resolution silently reverting the OTA redirect.
-  EXPECTED_RELEASE_URL: https://github.com/techfoundrynz/gaggimate/releases/
+  EXPECTED_RELEASE_URL: https://github.com/MrMudeer/gaggimate/releases/
 
 jobs:
   rebase:
